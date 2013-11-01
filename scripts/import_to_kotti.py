@@ -58,9 +58,9 @@ def main():
 def get_main_nav_items(page):
 
     return filter(
-        lambda li: li['id'] not in [u'nav_home',
-                                    u'nav_instances',
-                                    u'nav_login'],
+        lambda li: li.get('id') not in [u'nav_home',
+                                        u'nav_instances',
+                                        u'nav_login'],
         page.find(id='nav').find('div', class_='menu').ul.find_all(
             'li', recursive=False))
 
@@ -100,6 +100,9 @@ def add_document(target, elem, recursive=True):
         a = elem
     else:
         a = elem.find('a', recursive=False)
+
+    if not a:
+        return
 
     print("checking %s ..." % a)
     if not 'href' in a.attrs:
